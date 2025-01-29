@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mean Girl Burn Book</title>
+  </head>
+  <body>
+    <h1>Mean Girl Burn Book</h1>
+    <form action="/signup"><button type="submit">Sign up</button></form>
+    <br />
+    <% messages.map( (msg) => { %>
+    <div
+      style="
+        border-style: solid;
+        border-color: black;
+        border-width: 1px;
+        padding: 20px;
+      "
+    >
+      <p>
+        <span style="font-weight: bold">Title:</span><br />
+        <%=msg.title %>
+      </p>
+      <p>
+        <span style="font-weight: bold">Message:</span><br />
+        <%=msg.message %>
+      </p>
+      <p>
+        <span style="font-weight: bold">Author:</span><br />
+        Anonymous Mean Girl
+      </p>
+    </div>
+    <br />
+    <% }) %>
+  </body>
+</html>

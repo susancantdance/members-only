@@ -1,0 +1,15 @@
+CREATE TABLE username (
+id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+username VARCHAR (255),
+firstname VARCHAR (255),
+lastname VARCHAR (255),
+password VARCHAR (255),
+membership VARCHAR (255));
+
+CREATE TABLE members (
+id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+title VARCHAR (255),
+message VARCHAR (255),
+timestamp DATE,
+creator_id INTEGER REFERENCES username (id)
+)
