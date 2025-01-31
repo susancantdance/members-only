@@ -1,5 +1,11 @@
 const pool = require("./pool.js");
 
+//logout page
+//write message (add timestamp)
+//admin functionality
+//delete functinality (admin only)
+//club password page should be signed up only to become members
+
 async function getMessages() {
   const messages = await pool.query("SELECT * FROM messages");
   return messages.rows;
@@ -7,7 +13,7 @@ async function getMessages() {
 
 async function getMemberMessages() {
   const messages = await pool.query(
-    "SELECT messages.id AS id,title,message,timestamp,username.username AS username FROM messages JOIN username ON username.id = creator_id"
+    "SELECT messages.id AS id,title,message,timestamp,username.username AS author FROM messages JOIN username ON username.id = creator_id"
   );
   return messages.rows;
 }

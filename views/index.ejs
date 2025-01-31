@@ -10,7 +10,7 @@
     <% if (user) { %>
     <p>Thanks for signing in <%= user.username %></p>
     <% } %> <% if (user.membership) { %>
-    <p>You're in GLENCOCO!</p>
+    <p>YOU GO GLENCOCO!</p>
     <% } %>
     <form action="/signup"><button type="submit">Sign up</button></form>
     <br />
@@ -33,7 +33,8 @@
       </p>
       <p>
         <span style="font-weight: bold">Author:</span><br />
-        Anonymous Mean Girl
+        <% if (user.membership == true) { %> <%=msg.author %> <% } else { %>
+        Anonymous Mean Girl <% } %>
       </p>
     </div>
     <br />

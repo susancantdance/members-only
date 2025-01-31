@@ -3,8 +3,10 @@ const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 
 async function getMessages(req, res) {
-  const messages = await db.getMessages();
+  console.log(`membership ${req.user.membership}`);
+  const messages = await db.getMemberMessages();
   console.log("getMessages controller");
+  console.log(`messages: ${messages}`);
   console.log(req.user);
   res.render("index", { messages: messages, user: req.user });
 }
