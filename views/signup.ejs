@@ -7,19 +7,28 @@
     <style>
       form {
         width: 350px;
-        padding: 30px;
+        padding: 30px 50px 30px 30px;
         display: grid;
         grid-template-columns: 1fr 1fr;
-
         align-items: center;
+        border-style: solid;
+        border-color: black;
+        border-width: 1px;
+        margin-left: 30px;
       }
       label {
         grid-column: 1/2;
         text-align: right;
+        margin-right: 20px;
       }
       input {
-        margin-left: 5px;
+        margin-left: 10px;
         grid-column: 2/3;
+      }
+      .check {
+        justify-self: left;
+        width: 20px;
+        height: 20px;
       }
       button {
         align-self: center;
@@ -32,12 +41,25 @@
   <body>
     <h1>Sign Up</h1>
     <form action="/signup" method="POST">
+      <label for="firstName">First Name: </label
+      ><input id="firstName" type="text" name="firstName" required /><br />
+      <label for="lastName">Last Name: </label>
+      <input type="text" name="lastName" id="lastName" required />
+      <br />
       <label for="email">Email: </label
       ><input id="email" type="email" name="username" required /><br />
       <label for="pw">Password: </label>
       <input type="password" name="password" id="pw" required /><br />
       <label for="confirm">Confirm PW: </label>
       <input type="password" name="confirm" id="confirm" required /><br />
+      <label for="admin">Is that you, Regina?</label>
+      <input
+        class="check"
+        type="checkbox"
+        name="admin"
+        id="admin"
+        value="yes"
+      /><br />
       <label for="but"></label><button type="submit" id="but">Submit</button>
     </form>
   </body>

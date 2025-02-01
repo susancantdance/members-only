@@ -1,10 +1,10 @@
 const pool = require("./pool.js");
 
-//logout page
-//write message (add timestamp)
+//logout page XX
+//write message (add timestamp) XX
 //admin functionality
 //delete functinality (admin only)
-//club password page should be signed up only to become members
+//club password page should be signed up only to become members XX
 
 async function getMessages() {
   const messages = await pool.query("SELECT * FROM messages");
@@ -18,10 +18,10 @@ async function getMemberMessages() {
   return messages.rows;
 }
 
-async function postSignup(user, pw) {
+async function postSignup(user, pw, firstName, lastName, admin) {
   await pool.query(
-    "INSERT INTO username (username, password) values ($1, $2)",
-    [user, pw]
+    "INSERT INTO username (username, password, firstname, lastname, admin) values ($1, $2, $3, $4, $5)",
+    [user, pw, firstName, lastName, admin]
   );
 }
 
@@ -47,6 +47,17 @@ async function deserialize(id) {
   return rows;
 }
 
+async function postNewMsg(title, time, msg, userId) {
+  await pool.query(
+    "INSERT INTO messages (title, timestamp, message, creator_id) VALUES ($1,$2,$3,$4)",
+    [title, time, msg, userId]
+  );
+}
+
+async function deleteMsg(messageId) {
+  await pool.query("DELETE FROM messages WHERE id = $1", [messageId]);
+}
+
 module.exports = {
   getMessages,
   getMemberMessages,
@@ -54,4 +65,6 @@ module.exports = {
   checkUserExists,
   deserialize,
   updateMembership,
+  postNewMsg,
+  deleteMsg,
 };

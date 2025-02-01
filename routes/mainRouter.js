@@ -29,9 +29,19 @@ mainRouter.post(
   })
 );
 
+//logout page
+mainRouter.post("/logout", controller.logout);
+
+//write message page
+mainRouter.get("/new", controller.getNewMsg);
+mainRouter.post("/newmessage", controller.postNewMsg);
+
 //club membership page
 mainRouter.get("/club", controller.getClub);
 mainRouter.post("/club", controller.postClub);
+
+//delete message route
+mainRouter.post("/delete", controller.deleteMsg);
 
 module.exports = {
   mainRouter,

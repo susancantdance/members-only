@@ -11,19 +11,32 @@
         align-items: center;
         justify-content: center;
       }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
       input {
         height: 100px;
         width: 400px;
         font-size: 90px;
+        padding: 10px;
       }
     </style>
   </head>
   <body>
-    <h1>Enter the password, Betches</h1>
+    <% if(user){ %>
+    <h1>Password, betches</h1>
     <form method="POST" action="/club">
       <input type="hidden" name="username" value="club@membership.com" />
-      <input type="password" name="password" />
-      <button type="submit">Enter</button>
+      <input type="password" name="password" /><br />
+      <button style="width: 200px; height: 50px" type="submit">Enter</button>
     </form>
+    <h2>Join the club and you'll know who wrote what!</h2>
+    <% } else { %>
+    <h3>Sorry babe, you aren't authorized to post a message.</h3>
+    <p><a href="/signup">Signup first</a></p>
+    <% } %>
   </body>
 </html>

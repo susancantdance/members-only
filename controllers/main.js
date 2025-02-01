@@ -3,11 +3,9 @@ const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 
 async function getMessages(req, res) {
-  console.log(`membership ${req.user.membership}`);
   const messages = await db.getMemberMessages();
   console.log("getMessages controller");
-  console.log(`messages: ${messages}`);
-  console.log(req.user);
+
   res.render("index", { messages: messages, user: req.user });
 }
 
@@ -17,13 +15,22 @@ async function getSignup(req, res) {
 
 async function postSignup(req, res, next) {
   const errors = validationResult(req);
+  let admin = false;
+  if (req.body.admin == "yes") {
+    admin = true;
+  }
   if (!errors.isEmpty()) {
     return res.send(errors.array()[0].msg);
   }
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    // console.log(req.body.username + "pw" + hashedPassword);
-    await db.postSignup(req.body.username, hashedPassword);
+    await db.postSignup(
+      req.body.username,
+      hashedPassword,
+      req.body.firstName,
+      req.body.lastName,
+      admin
+    );
 
     res.redirect("/login");
   } catch (error) {
@@ -33,9 +40,7 @@ async function postSignup(req, res, next) {
 }
 
 async function getClub(req, res, next) {
-  console.log("get club function");
-  console.log(req.user.username);
-  res.render("club");
+  res.render("club", { user: req.user });
 }
 
 async function postClub(req, res, next) {
@@ -50,7 +55,7 @@ async function postClub(req, res, next) {
     console.log(match);
     if (!match) {
       // passwords do not match!
-      res.send("wrong honey. sorry");
+      res.send("wrong, honey. passwords don't match. sorry");
     }
     console.log(`calling update membersship(${req.user.username})`);
     await db.updateMembership(req.user.username);
@@ -62,6 +67,31 @@ async function postClub(req, res, next) {
 
 async function getLogin(req, res, next) {
   res.render("login");
+}
+
+async function logout(req, res, next) {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/login");
+  });
+}
+
+async function getNewMsg(req, res, next) {
+  res.render("msg", { user: req.user });
+}
+
+async function postNewMsg(req, res, next) {
+  const time = new Date();
+  console.log(time);
+  await db.postNewMsg(req.body.title, time, req.body.message, req.user.id);
+  res.redirect("/");
+}
+
+async function deleteMsg(req, res, next) {
+  await db.deleteMsg(req.body.messageId);
+  res.redirect("/");
 }
 
 // async function postLogin(req, res, next) {
@@ -78,5 +108,9 @@ module.exports = {
   getClub,
   getLogin,
   postClub,
+  logout,
+  getNewMsg,
+  postNewMsg,
+  deleteMsg,
   // postLogin,
 };
