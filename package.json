@@ -17,7 +17,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "populate": "node sql.js",
-    "start": "node app.js"
+    "start": "node app.js && node sql.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
